@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 5.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/school_manage2</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">bac6122003</property>
+
+        <!-- Show all executed SQL to console -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="generate_statistics">true</property>
+
+
+        <!-- Enable Hibernate's automatic session context management -->
+        <property name="hibernate.current_session_context_class">thread</property>
+
+        <!-- Caching settings (optional) -->
+        <property name="hibernate.cache.use_second_level_cache">false</property>
+        <property name="hibernate.cache.region.factory_class">org.hibernate.cache.jcache.JCacheRegionFactory</property>
+        <!-- Entity mapping -->
+        <mapping class="models.Classroom"/>
+        <mapping class="models.User"/>
+        <mapping class="models.Course"/>
+        <mapping class="models.Enrollment"/>
+        <mapping class="models.Lecturer"/>
+        <mapping class="models.Student"/>
+        <mapping class="models.Major"/>
+        <mapping class="models.Facility"/>
+
+
+    </session-factory>
+</hibernate-configuration>

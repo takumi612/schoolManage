@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="823d2dd3-3688-482e-8e6f-d7d97b033f3d" name="school_manage@localhost Mapping">
+      <data-sources db="b94ba03f-6abf-4918-903f-ee073396e6f8" />
+      <scope>
+        <node kind="schema" qname="school_manage" />
+      </scope>
+    </mapping>
+  </component>
+</project>
