@@ -3,7 +3,6 @@ package controller;
 import dtos.ClassDto;
 import models.Classroom;
 import models.Course;
-import models.Lecturer;
 import models.User;
 import services.implement.ClassService;
 import jakarta.servlet.ServletException;
@@ -13,9 +12,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import services.implement.CourseService;
-import services.implement.LecturerService;
 import utils.ResultList;
 import java.io.IOException;
+import java.util.List;
 import java.util.stream.Stream;
 
 @WebServlet("/classAdmin")
@@ -88,6 +87,7 @@ public class ClassAdminController extends HttpServlet {
         if(Stream.of(selectedYear, selectedLec, selectedCourse,selectedMajor)
                 .allMatch(s -> s == null || s.isEmpty() || s.equalsIgnoreCase("0"))
         ){
+            course = new Course();
             classroomList = classService.selectAll(start,elementsPerPage);
         }else{
             if(selectedCourse == null || selectedCourse.isEmpty() || selectedCourse.equalsIgnoreCase("0")){
@@ -96,8 +96,13 @@ public class ClassAdminController extends HttpServlet {
                 course = courseService.selectedByName(selectedCourse);
             }
             classDto = new ClassDto(selectedYear,course.getId(),selectedLec,selectedMajor);
+            if(course.getMajorIn()!=null){
+                classDto.setSelectedMajor(course.getMajorIn().getMajorName());
+            }
             classroomList = classService.findByClassCondition(classDto,start,elementsPerPage);
         }
+
+        List<Integer> yearList  = classService.listYear();
 
         // Lấy tất cả các class
         if(classroomList.getCount() == null){
@@ -107,6 +112,8 @@ public class ClassAdminController extends HttpServlet {
         }
 
         req.setAttribute("classroomList", classroomList.getResultList());
+        req.setAttribute("course", course);
+        req.setAttribute("yearList", yearList);
         req.setAttribute("classDto",classDto);
 
         req.setAttribute("pageNumber", pageNumber);

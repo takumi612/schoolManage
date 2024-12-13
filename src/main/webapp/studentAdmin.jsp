@@ -34,12 +34,8 @@
     }
     User user = (User) session.getAttribute("user");
     List<StudentDto> studentList = (List<StudentDto>) request.getAttribute("studentList");
-
-    StudentService studentService = new StudentService();
-    MajorService majorService = new MajorService();
-
-    List<Major> majorList = majorService.selectAll();
-    List<Integer> yearList  = studentService.listYear();
+    List<Major> majorList = (List<Major>) session.getAttribute("mayorList") ;
+    List<Integer> yearList  = (List<Integer>) request.getAttribute("yearList");
 
     if(user == null){
         response.sendRedirect("index.jsp");
@@ -68,8 +64,6 @@
     }
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-
 %>
 
 <div class="container text-center">

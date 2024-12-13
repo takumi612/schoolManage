@@ -23,20 +23,19 @@
 
 <%
     ClassDto classDto = (ClassDto) request.getAttribute("classDto");
-    String selectedMajor = "";
-
+    String selectedMajor;
     String selectedLec;
     String selectedYear;
     String selectedCourse;
+
     if(classDto!=null){
         try{
             selectedCourse= String.valueOf(classDto.getCourseID());
         }catch (Exception e){
             selectedCourse= "";
         }
-
         try{
-            selectedLec= String.valueOf(classDto.getLecID());
+            selectedLec= String.valueOf(classDto.getLecLName());
         }catch (Exception e){
             selectedLec= "";
         }
@@ -51,26 +50,6 @@
         selectedYear = "";
         selectedMajor = "";
     }
-
-    ClassService classService = new ClassService();
-    MajorService majorService = new MajorService();
-    LecturerService lecturerService = new LecturerService();
-    CourseService courseService = new CourseService();
-
-    Course course;
-    if(Stream.of(selectedCourse)
-            .noneMatch(String::isEmpty) && !selectedCourse.equalsIgnoreCase("0"))
-    {
-        course = courseService.selectedById(Integer.parseInt(selectedCourse));
-    }else{
-        course = new Course();
-    }
-    if(course.getMajorIn()!=null){
-        selectedMajor = course.getMajorIn().getMajorName();
-    }
-    List<Major> majorList = majorService.selectAll();
-    List<Integer> yearList  = classService.listYear();
-
 
     int pageNumber = (Integer) request.getAttribute("pageNumber");
     int elementsPerPage = (Integer) request.getAttribute("elementsPerPage");
@@ -89,7 +68,11 @@
     }
 
     User user = (User) session.getAttribute("user");
+    Course course = (Course) request.getAttribute("course");
+    List<Major> majorList = (List<Major>) session.getAttribute("mayorList");
+    List<Integer> yearList  = (List<Integer>) request.getAttribute("yearList");
     List<Classroom> classroomList = (List<Classroom>) request.getAttribute("classroomList");
+
     if(user == null){
         response.sendRedirect("index.jsp");
         return;

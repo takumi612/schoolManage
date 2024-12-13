@@ -3,10 +3,11 @@ package controller;
 import dtos.StudentDto;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.Part;
+import models.Major;
 import models.Student;
 import models.User;
 import org.apache.commons.io.IOUtils;
-import org.modelmapper.ModelMapper;
+import services.implement.MajorService;
 import services.implement.StudentService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -128,10 +129,16 @@ public class StudentAdminController extends HttpServlet {
             studentDtoList.add(studentDto1);
         }
 
+        StudentService studentService = new StudentService();
+        MajorService majorService = new MajorService();
+
+        List<Major> majorList = majorService.selectAll();
+        List<Integer> yearList  = studentService.listYear();
+
+        sessionHttp.setAttribute("mayorList", majorList);
+        req.setAttribute("yearList",yearList);
         req.setAttribute("studentList", studentDtoList);
-
         req.setAttribute("searchDto",studentDto);
-
         req.setAttribute("pageNumber", pageNumber);
         req.setAttribute("noOfRecord", noOfRecord);
         req.setAttribute("elementsPerPage", elementsPerPage);

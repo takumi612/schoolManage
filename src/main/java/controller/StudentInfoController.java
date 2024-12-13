@@ -83,12 +83,9 @@ public class StudentInfoController extends HttpServlet {
         if(student.getStudentImage()!=null){
             studentImage = Base64.getEncoder().encodeToString(student.getStudentImage());
         }
-
-
         // Lấy Student dựa trên userName hay StudenCode
 
         yearList = getSchoolYears(student);
-
 
         // Lấy List class dựa trên userID
         // Có 1 nhược điểm là cái noOfRecord ít khi bị thay đổi nhưng mỗi lần chuyển trang dều phải hỏi db

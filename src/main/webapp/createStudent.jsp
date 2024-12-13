@@ -8,9 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%
-    MajorService majorService = new MajorService();
-
-    List<Major> majorList = majorService.selectAll();
+    List<Major> majorList = (List<Major>) session.getAttribute("mayorList");
 %>
 <div class="modal fade" id="addUserModal" tabindex="-1">
     <div class="modal-dialog" role="document">

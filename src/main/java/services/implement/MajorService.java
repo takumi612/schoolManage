@@ -37,8 +37,11 @@ public class MajorService implements IServices<Major> {
             criteria.select(root);
             criteria.orderBy(builder.asc(root.get("majorName")));
             Query<Major> query = session.createQuery(criteria);
-            return query.getResultList();
-
+            List<Major> majorList = query.getResultList();
+            for(Major major : majorList) {
+                Hibernate.initialize(major.getFacilityIn());
+            }
+            return majorList;
         }
     }
 
